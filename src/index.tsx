@@ -2,12 +2,28 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import App from "./App";
+import reset from "styled-reset";
+
+import { createGlobalStyle, ThemeProvider } from "styled-components";
+const GlobalStyle = createGlobalStyle`
+  ${reset}
+  *{
+    box-sizing: border-box;
+  }
+  body{
+    color: black;
+    line-height:1.2;
+    background:linear-gradient(135deg, #e09, #d0e);
+  }
+  
+`;
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
+    <GlobalStyle />
     <App />
   </React.StrictMode>
 );
