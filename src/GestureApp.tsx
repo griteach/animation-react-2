@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { motion } from "framer-motion";
-import { useRef } from "react";
+import { motion, useMotionValue, useTransform, useScroll } from "framer-motion";
+import { useEffect, useRef } from "react";
 
-const Wrapper = styled.div`
-  height: 100vh;
+const Wrapper = styled(motion.div)`
+  height: 200vh;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -21,7 +21,7 @@ const Box = styled(motion.div)`
 
 const boxVariants = {
   hover: {
-    scale: 1.2,
+    scale: 1.1,
     rotateZ: 90,
   },
   tap: {
@@ -42,19 +42,29 @@ const BiggerBox = styled.div`
 
 function GestureApp() {
   const biggerBoxRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const rotateZ = useTransform(x, [-400, 400], [-360, 360]);
+  const gradient = useTransform(
+    x,
+    [-400, 0, 400],
+    [
+      "linear-gradient(135deg, rgb(0, 8, 238), rgb(0, 238, 91))",
+      "linear-gradient(135deg, rgb(238, 0, 153), rgb(238, 0, 0))",
+      "linear-gradient(135deg, rgb(226, 238, 0), rgb(221, 0, 238))",
+    ]
+  );
+
+  const { scrollYProgress } = useScroll();
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 5]);
+  useEffect(() => {
+    scrollYProgress.onChange(() => {
+      console.log(scrollYProgress.get());
+    });
+  }, [scrollYProgress]);
 
   return (
-    <Wrapper>
-      <BiggerBox ref={biggerBoxRef}>
-        {/* dragConstraints : biggerBoxRef를 가져와서 BiggerBox와 연결시켜준다. */}
-        <Box
-          drag
-          dragConstraints={biggerBoxRef}
-          variants={boxVariants}
-          whileHover="hover"
-          whileTap="tap"
-        />
-      </BiggerBox>
+    <Wrapper style={{ background: gradient }}>
+      <Box style={{ x, rotateZ, scale }} drag="x" dragSnapToOrigin />
     </Wrapper>
   );
 }
