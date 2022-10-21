@@ -5,6 +5,7 @@ import App from "./App";
 import reset from "styled-reset";
 
 import { createGlobalStyle, ThemeProvider } from "styled-components";
+import GestureApp from "./GestureApp";
 const GlobalStyle = createGlobalStyle`
   ${reset}
   *{
@@ -24,7 +25,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <GlobalStyle />
-    <App />
+    {/* <App /> */}
+    <GestureApp />
   </React.StrictMode>
 );
 
