@@ -7,6 +7,7 @@ import reset from "styled-reset";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import GestureApp from "./GestureApp";
 import SvgAnimation from "./SvgAnimation";
+import AnimationPresenceApp from "./AnimationPresenceApp";
 const GlobalStyle = createGlobalStyle`
   ${reset}
   *{
@@ -28,7 +29,8 @@ root.render(
     <GlobalStyle />
     {/* <App /> */}
     {/* <GestureApp /> */}
-    <SvgAnimation />
+    {/* <SvgAnimation /> */}
+    <AnimationPresenceApp />
   </React.StrictMode>
 );
 
