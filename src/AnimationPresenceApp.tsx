@@ -6,16 +6,15 @@ const Wrapper = styled(motion.div)`
   height: 100vh;
   width: 100vw;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+
+  justify-content: space-evenly;
   align-items: center;
 `;
 
 const Box = styled(motion.div)`
   width: 100px;
   height: 100px;
-  position: absolute;
-  top: 50px;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,6 +22,13 @@ const Box = styled(motion.div)`
   font-size: xx-large;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 1);
+`;
+
+const Circle = styled(motion.div)`
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  background-color: blue;
 `;
 
 const boxVariants = {
@@ -59,8 +65,12 @@ function AnimationPresenceApp() {
     setVisible((prev) => (prev === 1 ? 1 : prev - 1));
     setBack(true);
   };
+
+  const [clicked, setClicked] = useState(false);
+  const toggleClicked = () => setClicked((prev) => !prev);
+
   return (
-    <Wrapper>
+    <Wrapper onClick={toggleClicked}>
       {/* AnimatePresence는 반드시 visible한 상태쳐야 한다.  */}
       {/* <AnimatePresence>
         {showing ? (
@@ -73,7 +83,7 @@ function AnimationPresenceApp() {
         ) : null}
       </AnimatePresence>
       <button onClick={showingToggle}>CLICK</button> */}
-      <AnimatePresence custom={back}>
+      {/* <AnimatePresence custom={back}>
         <Box
           key={visible}
           custom={back}
@@ -86,7 +96,32 @@ function AnimationPresenceApp() {
         </Box>
       </AnimatePresence>
       <button onClick={nextPlease}>next</button>
-      <button onClick={prevPlease}>prev</button>
+      <button onClick={prevPlease}>prev</button> */}
+      {/* 
+      <Box>
+        {clicked ? (
+          <Circle
+            layoutId="circle"
+            style={{
+              scale: 1,
+              borderRadius: 25,
+              backgroundColor: "rgba(241, 196, 15,1.0)",
+            }}
+          />
+        ) : null}
+      </Box>
+      <Box>
+        {!clicked ? (
+          <Circle
+            layoutId="circle"
+            style={{
+              scale: 1.7,
+              borderRadius: 10,
+              backgroundColor: "rgba(41, 128, 185,1.0)",
+            }}
+          />
+        ) : null}
+      </Box> */}
     </Wrapper>
   );
 }
