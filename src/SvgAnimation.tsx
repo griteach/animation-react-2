@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 import styled from "styled-components";
 
 const Wrapper = styled(motion.div)`
@@ -18,6 +19,12 @@ const Svg = styled.svg`
   }
 `;
 
+const Box = styled(motion.div)`
+  width: 100px;
+  height: 100px;
+  background-color: rgba(255, 255, 255, 0.5);
+`;
+
 const svg = {
   start: {
     pathLength: 0,
@@ -29,9 +36,44 @@ const svg = {
   },
 };
 
+const boxVariants = {
+  initial: {
+    opacity: 0,
+    scale: 0,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    rotateZ: 360,
+  },
+  leaving: {
+    opacity: 0,
+
+    y: 20,
+  },
+};
+
 function SvgAnimation() {
+  const [showing, setShowing] = useState(true);
+  const showingToggle = () => {
+    setShowing((prev) => !prev);
+  };
+
   return (
     <Wrapper>
+      {/* AnimatePresence는 반드시 visible한 상태쳐야 한다.  */}
+      <AnimatePresence>
+        {showing ? (
+          <Box
+            variants={boxVariants}
+            initial="initial"
+            animate="visible"
+            exit="leaving"
+          />
+        ) : null}
+      </AnimatePresence>
+
+      <button onClick={showingToggle}>CLICK</button>
       <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
         <motion.path
           variants={svg}
@@ -52,5 +94,4 @@ function SvgAnimation() {
     </Wrapper>
   );
 }
-
 export default SvgAnimation;
