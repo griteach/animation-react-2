@@ -12,7 +12,6 @@ const Wrapper = styled(motion.div)`
 `;
 
 const Box = styled(motion.div)`
-  width: 100px;
   height: 100px;
 
   display: flex;
@@ -22,6 +21,27 @@ const Box = styled(motion.div)`
   font-size: xx-large;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 1);
+`;
+
+const Grid = styled.div`
+  display: grid;
+  width: 80vh;
+  grid-gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  div:first-child,
+  div:last-child {
+    grid-column: span 2;
+  }
+`;
+
+const OverLay = styled(motion.div)`
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const Circle = styled(motion.div)`
@@ -47,6 +67,18 @@ const boxVariants = {
     x: back ? 500 : -500,
     scale: 0,
   }),
+};
+
+const overLayVariants = {
+  initial: {
+    backgroundColor: "rgba(0,0,0,0)",
+  },
+  visible: {
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  exit: {
+    backgroundColor: "rgba(0,0,0,0)",
+  },
 };
 
 function AnimationPresenceApp() {
@@ -122,6 +154,24 @@ function AnimationPresenceApp() {
           />
         ) : null}
       </Box> */}
+      <Grid>
+        <Box layoutId="box" />
+        <Box />
+        <Box />
+        <Box />
+      </Grid>
+      <AnimatePresence>
+        {clicked ? (
+          <OverLay
+            variants={overLayVariants}
+            initial="initial"
+            animate="visible"
+            exit="exit"
+          >
+            <Box layoutId="box" style={{ width: 300, height: 100 }} />
+          </OverLay>
+        ) : null}
+      </AnimatePresence>
     </Wrapper>
   );
 }
