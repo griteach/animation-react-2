@@ -98,11 +98,10 @@ function AnimationPresenceApp() {
     setBack(true);
   };
 
-  const [clicked, setClicked] = useState(false);
-  const toggleClicked = () => setClicked((prev) => !prev);
-
+  const [id, setId] = useState<null | string>(null);
+  console.log(id);
   return (
-    <Wrapper onClick={toggleClicked}>
+    <Wrapper>
       {/* AnimatePresence는 반드시 visible한 상태쳐야 한다.  */}
       {/* <AnimatePresence>
         {showing ? (
@@ -155,20 +154,20 @@ function AnimationPresenceApp() {
         ) : null}
       </Box> */}
       <Grid>
-        <Box layoutId="box" />
-        <Box />
-        <Box />
-        <Box />
+        {["1", "2", "3", "4"].map((n) => (
+          <Box onClick={() => setId(n)} key={n} layoutId={n} />
+        ))}
       </Grid>
       <AnimatePresence>
-        {clicked ? (
+        {id != null ? (
           <OverLay
+            onClick={() => setId(null)}
             variants={overLayVariants}
             initial="initial"
             animate="visible"
             exit="exit"
           >
-            <Box layoutId="box" style={{ width: 300, height: 100 }} />
+            <Box layoutId={id} style={{ width: 300, height: 100 }} />
           </OverLay>
         ) : null}
       </AnimatePresence>
